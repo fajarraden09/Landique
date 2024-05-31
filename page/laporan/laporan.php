@@ -104,15 +104,11 @@ if (isset($_POST['cari'])) {
               </tbody>
               <tbody>
               <tr>
-                 <th colspan="4" style="text-align: center;">Total Pemasukan dan Pembayaran</th>
-                 <td>Rp. <?= number_format($masuk); ?></td>
-                 <td colspan="2">Rp. <?= number_format($keluar); ?></td>
-               </tr>
-              </tbody>
-              <tbody>
-                <tr>
-                  <th colspan="4" style="text-align: center;">Saldo Akhir</th>
-                  <td colspan="3">Rp. <?= number_format($total); ?></td>
+                <!-- Saldo Akhir -->
+<tr>
+    <th colspan="4" style="text-align: center;">Saldo Akhir</th>
+    <td colspan="3">Rp. <?php echo isset($saldo) ? number_format($saldo) : 0; ?></td>
+</tr>
                 </tr>
               </tbody>
               </table>
