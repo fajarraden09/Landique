@@ -113,6 +113,7 @@ if (isset($_POST['simpan'])) {
           <?php endif; ?>
       </div>
   </div>
+
       <div class="col-6">
       <div class="card m-b-30">
         <div class="card-body">
@@ -144,3 +145,21 @@ if (isset($_POST['simpan'])) {
     </div> <!-- end container -->
     <!-- end page title end breadcrumb -->
 </div>
+
+<!-- <script language="JavaScript">
+    Webcam.set({
+        width: 470,
+        height: 370,
+        image_format: 'jpeg',
+        jpeg_quality: 90
+    });
+  
+    Webcam.attach( '#my_camera' );
+  
+    function ambilgambar() {
+        Webcam.snap( function(data_uri) {
+            $(".image-tag").val(data_uri);
+            document.getElementById('results').innerHTML = '<img src="'+data_uri+'"/>';
+        } );
+    }
+</script> -->
