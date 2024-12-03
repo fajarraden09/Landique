@@ -1,305 +1,167 @@
 <?php 
-
-// memulai session
-session_start();
-
-// menghilangkan undifine error index
-error_reporting(E_ALL ^ (E_NOTICE | E_WARNING));
-
-// membuat keamanan, jika belum login maka kembali ke login.php
-if (!isset($_SESSION['login'])) {
-  header('location: login.php');
-}
-
 // menyertakan koneksi.php
 include "include/koneksi.php";
 
-// menampilkan data user yang sedang login
-$id = $_SESSION['userid'];
-$users = mysqli_query($conn, "SELECT * FROM tb_users WHERE userid = '$id'");
-$tampilusers = mysqli_fetch_assoc($users);
+// $id = $_SESSION['usersid'];
+// $produk= mysqli_query($conn, "SELECT * FROM tb_users WHERE usersid = '$id'");
+// $tampilproduk = mysqli_fetch_assoc($produk);
 
+if ($_SERVER['REQUEST_METHOD']=='POST')  {
+
+  // here you can process posted data
+}
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui"
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <title>Landique</title>
+
+    <!-- STYLEHOME  -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Montserrat:400,500,700"
+      rel="stylesheet"
     />
-    <title>Kasir rental</title>
-    <!-- <meta content="Admin Dashboard" name="description" />
-    <meta content="Mannatthemes" name="author" /> -->
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-    <!-- <link rel="icon" href="assets/images/rent1.jpeg" type="image/jpeg" > -->
-    <link rel="shortcut icon" href="assets/images/rent1.jpeg" type="image/jpeg"/>
-
-    <link href="assets/plugins/morris/morris.css" rel="stylesheet" />
-
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <link href="assets/css/icons.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/style.css" rel="stylesheet" type="text/css" />
-
-    <!-- DataTables -->
-    <link href="assets/plugins/datatables/dataTables.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-    <link href="assets/plugins/datatables/buttons.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-    <!-- Responsive datatable examples -->
-    <link href="assets/plugins/datatables/responsive.bootstrap4.min.css" rel="stylesheet" type="text/css" />
-
-    <!-- sweetalert -->
-    <link rel="stylesheet" href="assets/sweeetalert2/dist/sweetalert2.min.css">
-    <script src="assets/sweeetalert2/dist/sweetalert2.all.min.js"></script>
-
-    <!-- webcam -->
-    <script src="assets/js/webcam.min.js"></script>
-
-    <!-- select -->
-    <link rel="stylesheet" href="assets/plugins/select2/select2.min.css">
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="stylehome/css/bootstrap.min.css"
+    />
+    <link type="text/css" rel="stylesheet" href="stylehome/css/slick.css" />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="stylehome/css/slick-theme.css"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="stylehome/css/nouislider.min.css"
+    />
+    <link rel="stylesheet" href="stylehome/css/font-awesome.min.css" />
+    <link type="text/css" rel="stylesheet" href="stylehome/css/style.css" />
+    <!-- STYLEHOME-END -->
   </head>
+  <body>
 
-  <body class="fixed-left">
-    <!-- Loader -->
+    <!-- HEADER -->
+      <?php include "include/napbar.php"; ?>
+    <!-- /HEADER -->
 
-    <!-- Begin page -->
-    <div id="wrapper">
-      <!-- ========== Left Sidebar Start ========== -->
-      <div class="left side-menu">
-        <button type="button" class="button-menu-mobile button-menu-mobile-topbar open-left waves-effect">
-          <i class="ion-close"></i>
-        </button>
+    <!-- MENU UTAMA-->
+    <div id="breadcrumb" class="section">
+			<div class="container" style="margin-top: -10px; margin-bottom: -10px">
+				<div class="row">
+					<div class="col-md-12" >
+						<ul class="breadcrumb-tree">
+							<li><a href="index.php">Beranda</a></li>
+							<!-- <li class="active">Tentang Kami</li> -->
+						</ul>
+					</div>
+				</div>
+			</div>
+    </div>  
 
-        <!-- LOGO -->
-        <div class="topbar-left">
-          <div class="text-center">
-            <a href="index.php"><img src="assets/images/rent1.jpeg" width="160px"></a>
-          </div>
-        </div>
+    <div class="section">
+      <div class="container" style="margin-top: -35px;">
+        <div class="row">
+          <!-- <div class="col-md-12">
+            <div class="col-md-6  ">
+              <div class="header-search">
+                <form action="search.php" method="GET">
+                  <input class="input" placeholder="Ketik Disini" />
+                  <button type="submit" class="search-btn">Cari</button>
+                </form>
+              </div>
+            </div>
+          </div> -->
 
-        <div class="sidebar-inner slimscrollleft">
-
-          <!-- memasukkan menu.php -->
-          <?php include "include/menu.php"; ?>
-
-          <div class="clearfix"></div>
-        </div>
-        <!-- end sidebarinner -->
-      </div>
-      <!-- Left Sidebar End -->
-
-      <!-- Start right Content here -->
-      <div class="content-page background">
-
-        <!-- Start content -->
-        <div class="content">
-          <!-- Top Bar Start -->
-          <div class="topbar">
-            <nav class="navbar-custom">
-              <ul class="list-inline float-right mb-0">
-                <li class="list-inline-item dropdown notification-list">
-                  <a
-                    class="
-                      nav-link
-                      dropdown-toggle
-                      arrow-none
-                      waves-effect
-                      nav-user
-                    "
-                    data-toggle="dropdown"
-                    href="#"
-                    role="button"
-                    aria-haspopup="false"
-                    aria-expanded="false"
-                  >
-
-                  <!-- jika foto profile ada -->
-                  <?php if(!empty($tampilusers['userfoto'])) { ?>
-                    <img
-                      src="fotouser/<?= $tampilusers['userfoto']; ?>";
-                      alt="user"
-                      class="rounded-circle"
-                    />
-                  <?php }else{ ?>
-                    <img
-                      src="fotouser/default.svg";
-                      alt="user"
-                      class="rounded-circle"
-                    />
-                  <?php } ?>
-
-                  </a>
-                  <div
-                    class="dropdown-menu dropdown-menu-right profile-dropdown"
-                  >
-                    <!-- item-->
-                    <div class="dropdown-item noti-title">
-                      <h5>Welcome <?= $tampilusers['username']; ?></h5>
+          <!-- BAGIAN PRODUK 1 -->
+          <div class="col-md-12">
+              <?php 
+                $no = 1;
+                $data = mysqli_query($conn,"select * from tb_produk");
+                while ($tampil = mysqli_fetch_array($data)){
+              ?>    
+                <div class="col-md-3" style="width: 285px; height: 300px; margin-bottom: 100px;"> 
+                  <div class="product" >
+                    <div class="product-img">
+                      <img
+                        src="fotoproduks/<?= $tampil['foto']; ?>";
+                        class="rounded-circle" style="width: 150px; height: 150px;"
+                      />
                     </div>
-                    
-                    <a class="dropdown-item" href="?page=profile&id=<?= $_SESSION['userid']; ?>"><i class="mdi mdi-account-circle m-r-5 text-muted"></i>Profile</a>
-                    
-                    <div class="dropdown-divider"></div>
-
-                    <a class="dropdown-item" href="logout.php" onclick="return confirm('Apakah anda ingin logout ?');"><i class="mdi mdi-logout m-r-5 text-muted"></i> Logout</a>
+                    <div class="product-body">
+                      <p class="product-category"><?php echo $tampil['kategori']; ?></p>
+                      <h3 class="product-name">
+                        <a href="detail.php?id=<?php echo $tampil['id_produk']; ?>">
+                          <?php echo $tampil['produk']; ?></a>
+                      </h3>
+                      <!-- HARGA -->
+                      <h4 class="product-price">Rp <?= number_format($tampil['harga']); ?></h4>
+                      <!-- END HARGA -->
+                      <div class="product-btns">
+                        <button class="quick-view">
+                          <a href="detail.php?id=<?php echo $tampil['id_produk']; ?>">
+                            <i class="fa fa-eye"></i><span class="tooltipp">Lihat Detail</span>
+                          </a>
+                        </button>
+                      </div>
+                    </div>
+                    <div class="add-to-cart">
+                      <a href="form_bayar.php?id=<?php echo $tampil['id_produk'];?>">
+                      <button class="add-to-cart-btn" type="submit">
+                        <i class="fa fa-money"></i> Checkout
+                      </button>
+                      </a>
+                    </div>
                   </div>
-                </li>
-              </ul>
-
-              <ul class="list-inline menu-left mb-0">
-                <li class="float-left">
-                  <button
-                    class="
-                      button-menu-mobile
-                      open-left
-                      waves-light waves-effect
-                    "
-                  >
-                    <i class="mdi mdi-menu"></i>
-                  </button>
-                </li>
-              </ul>
-
-              <div class="clearfix"></div>
-            </nav>
+                </div>
+              <?php 
+              }
+              ?>
           </div>
-          <!-- Top Bar End -->
-
-        <!-- memasukkan konten-->
-        <?php include "include/konten.php"; ?>
-       
-        <!-- Page content Wrapper -->
+          <!-- END BAGIAN PRODUK -->
         </div>
-        <!-- content -->
-
-        <footer class="footer">
-          ©
-          <?= date('Y'); ?>
-          Rental ps.
-        </footer>
       </div>
-      <!-- End Right content here -->
     </div>
-    <!-- END wrapper -->
+    <!-- /MENU UTAMA-->
 
-        <!-- jQuery  -->
-        <script src="assets/js/jquery.min.js"></script>
-        <script src="assets/js/popper.min.js"></script>
-        <script src="assets/js/bootstrap.min.js"></script>
-        <script src="assets/js/modernizr.min.js"></script>
-        <script src="assets/js/detect.js"></script>
-        <script src="assets/js/fastclick.js"></script>
-        <script src="assets/js/jquery.slimscroll.js"></script>
-        <script src="assets/js/jquery.blockUI.js"></script>
-        <script src="assets/js/waves.js"></script>
-        <script src="assets/js/jquery.nicescroll.js"></script>
-        <script src="assets/js/jquery.scrollTo.min.js"></script>
+        <!-- FOOTER -->
+        <footer id="footer" style=" position: flex;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            text-align: center;">
+        <div id="bottom-footer" class="section">
+            <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                <span class="copyright">
+                    Copyright <a href="adminz.php">&copy;</a>
+                    <script>
+                    document.write(new Date().getFullYear());
+                    </script>
+                    All rights reserved | This Made of Landique
+                </span>
+                </div>
+            </div>
+            </div>
+        </div>
+        </footer>
+        <!-- /FOOTER -->
 
-        <script src="assets/plugins/skycons/skycons.min.js"></script>
-        <script src="assets/plugins/raphael/raphael-min.js"></script>
-        <script src="assets/plugins/morris/morris.min.js"></script>
-
-        <!-- select2 -->
-        <script src="assets/plugins/select2/select2.min.js" type="text/javascript"></script>
-
-        <!-- Plugins js -->
-        <script src="assets/plugins/timepicker/moment.js"></script>
-        <script src="assets/plugins/timepicker/tempusdominus-bootstrap-4.js"></script>
-        <script src="assets/plugins/timepicker/bootstrap-material-datetimepicker.js"></script>
-        <script src="assets/plugins/clockpicker/jquery-clockpicker.min.js"></script>
-        <script src="assets/plugins/colorpicker/jquery-asColor.js" type="text/javascript"></script>
-        <script src="assets/plugins/colorpicker/jquery-asGradient.js" type="text/javascript"></script>
-        <script src="assets/plugins/colorpicker/jquery-asColorPicker.min.js" type="text/javascript"></script>
-
-        <script src="assets/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
-        <script src="assets/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-        <script src="assets/plugins/bootstrap-maxlength/bootstrap-maxlength.min.js" type="text/javascript"></script>
-        <script src="assets/plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js" type="text/javascript"></script>
-
-        <!-- Required datatable js -->
-        <script src="assets/plugins/datatables/jquery.dataTables.min.js"></script>
-         <script src="assets/plugins/datatables/dataTables.bootstrap4.min.js"></script>
-         <!-- Buttons examples -->
-         <script src="assets/plugins/datatables/dataTables.buttons.min.js"></script>
-         <script src="assets/plugins/datatables/buttons.bootstrap4.min.js"></script>
-         <script src="assets/plugins/datatables/jszip.min.js"></script>
-         <script src="assets/plugins/datatables/pdfmake.min.js"></script>
-         <script src="assets/plugins/datatables/vfs_fonts.js"></script>
-         <script src="assets/plugins/datatables/buttons.html5.min.js"></script>
-         <script src="assets/plugins/datatables/buttons.print.min.js"></script>
-         <script src="assets/plugins/datatables/buttons.colVis.min.js"></script>
-         <!-- Responsive examples -->
-         <script src="assets/plugins/datatables/dataTables.responsive.min.js"></script>
-         <script src="assets/plugins/datatables/responsive.bootstrap4.min.js"></script>
- 
-         <!-- Datatable init js -->
-         <script src="assets/pages/datatables.init.js"></script>
-
-        <!-- Plugins Init js -->
-        <script src="assets/pages/form-advanced.js"></script>
-
-        <!-- App js -->
-        <script src="assets/js/app.js"></script>
-
-    <script>
-      /* BEGIN SVG WEATHER ICON */
-      if (typeof Skycons !== "undefined") {
-        var icons = new Skycons({ color: "#fff" }, { resizeClear: true }),
-          list = [
-            "clear-day",
-            "clear-night",
-            "partly-cloudy-day",
-            "partly-cloudy-night",
-            "cloudy",
-            "rain",
-            "sleet",
-            "snow",
-            "wind",
-            "fog",
-          ],
-          i;
-
-        for (i = list.length; i--; ) icons.set(list[i], list[i]);
-        icons.play();
-      }
-
-      // scroll
-
-      $(document).ready(function () {
-        $("#boxscroll").niceScroll({
-          cursorborder: "",
-          cursorcolor: "#cecece",
-          boxzoom: true,
-        });
-        $("#boxscroll2").niceScroll({
-          cursorborder: "",
-          cursorcolor: "#cecece",
-          boxzoom: true,
-        });
-      });
-    </script>
-
-    <script>
-    function previewFoto(){
-      const foto = document.querySelector('#foto');
-      const imgPreview = document.querySelector('.img-preview');
-
-      const fileFoto = new FileReader();
-      fileFoto.readAsDataURL(foto.files[0]);
-      fileFoto.onload = function(e) {
-      imgPreview.src = e.target.result;
-      }
-    }
-
-    function printContent(el){
-      var restorepage = document.body.innerHTML;
-      var printcontent = document.getElementById(el).innerHTML;
-      document.body.innerHTML = printcontent;
-      window.print();
-      document.body.innerHTML = restorepage;
-    }
-    </script>
+    <!-- jQuery Plugins -->
+    <script src="stylehome/js/jquery.min.js"></script>
+    <script src="stylehome/js/bootstrap.min.js"></script>
+    <script src="stylehome/js/slick.min.js"></script>
+    <script src="stylehome/js/nouislider.min.js"></script>
+    <script src="stylehome/js/jquery.zoom.min.js"></script>
+    <script src="stylehome/js/main.js"></script>
   </body>
 </html>

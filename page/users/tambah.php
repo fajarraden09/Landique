@@ -9,7 +9,6 @@ if (isset($_POST['tambah'])) {
   $userpass2 = htmlentities(strip_tags(trim($_POST["userpass2"])));
   $alamat = htmlentities(strip_tags(trim($_POST["alamat"])));
   $usertelp = htmlentities(strip_tags(trim($_POST["usertelp"])));
-  $level = htmlentities(strip_tags(trim($_POST["level"])));
   $pesan_error = "";
   $pesan_error_user = "";
   $pesan_error_pass = "";
@@ -30,7 +29,7 @@ if (isset($_POST['tambah'])) {
   if ($pesan_error_user == "" && $pesan_error_pass == "") {
     // enkripsi password
     $password = password_hash($userpass, PASSWORD_DEFAULT);
-    $query = mysqli_query($conn, "INSERT INTO `tb_users`(`userid`, `username`, `userpass`, `nama`, `jk`, `alamat`, `usertelp`, `level`) VALUES ('', '$username', '$password', '$nama', '$jk', '$alamat', '$usertelp', '$level')");
+    $query = mysqli_query($conn, "INSERT INTO `tb_users`(`usersid`, `username`, `userpass`, `nama`, `jk`, `alamat`, `usertelp`) VALUES ('', '$username', '$password', '$nama', '$jk', '$alamat', '$usertelp')");
     if ($query) {
       echo "
       <script>
@@ -69,7 +68,7 @@ if (isset($_POST['tambah'])) {
           <div class="page-title-box">
               <div class="btn-group float-right">
                   <ol class="breadcrumb hide-phone p-0 m-0">
-                      <li class="breadcrumb-item"><a href="index.php">rental</a></li>
+                      <li class="breadcrumb-item"><a href="index.php">Users</a></li>
                       <li class="breadcrumb-item active">Data Users</li>
                       <li class="breadcrumb-item active">Tambah User</li>
                   </ol>
@@ -145,7 +144,7 @@ if (isset($_POST['tambah'])) {
               </div> <!--end row-->         
 
               <div class="form-group row">
-                <label for="example-text-input" class="col-sm-2 col-form-label">Alamat</label>
+                <label for="example-text-input" class="col-sm-2 col-form-label">Alamat Lengkap (digunakan untuk alamat pengiriman)</label>
                 <div class="col-sm-10">
                   <textarea class="form-control" id="example-text-input" name="alamat" cols="20" rows="5" placeholder="Masukkan alamat" required><?= $alamat; ?></textarea>
                 </div>
@@ -155,16 +154,6 @@ if (isset($_POST['tambah'])) {
                 <label for="example-text-input" class="col-sm-2 col-form-label">Telp</label>
                 <div class="col-sm-10">
                   <input class="form-control" type="number"id="example-text-input" name="usertelp" placeholder="Masukkan No.Telp" value="<?= $usertelp; ?>" required/>
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label for="example-text-input" class="col-sm-2 col-form-label">Jabatan</label>
-                <div class="col-sm-10">
-                  <select name="level" class="form-control">
-                    <option value='admin' selected>Admin</option>
-                    <option value='karyawan'>karyawan</option>
-                  </select>
                 </div>
               </div>
 

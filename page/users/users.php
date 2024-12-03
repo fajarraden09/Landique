@@ -6,11 +6,11 @@
           <div class="page-title-box">
               <div class="btn-group float-right">
                   <ol class="breadcrumb hide-phone p-0 m-0">
-                      <li class="breadcrumb-item"><a href="#">Rental ps</a></li>
-                      <li class="breadcrumb-item active">Data Users</li>
+                      <li class="breadcrumb-item"><a href="#">Landique</a></li>
+                      <li class="breadcrumb-item active">Data User</li>
                   </ol>
               </div>
-              <h4 class="page-title">Data Users</h4>
+              <h4 class="page-title">Data User</h4>
           </div>
       </div>
   </div>
@@ -33,14 +33,13 @@
                   <th>Jen. Kel</th>
                   <th>Alamat</th>
                   <th>No. Telp</th>
-                  <th>Jabatan</th>
                   <th>Aksi</th>
                 </tr>
               </thead>
               <tbody>
               <?php 
               // menampilkan data users              
-              $result = mysqli_query($conn, "SELECT * FROM tb_users ORDER BY userid DESC"); ?>
+              $result = mysqli_query($conn, "SELECT * FROM tb_users ORDER BY usersid DESC"); ?>
               <?php $i = 1; ?>
               <?php while ($row = mysqli_fetch_assoc($result)) : ?>
                 <tr>
@@ -55,13 +54,12 @@
                   <td><?= $row['jk']; ?></td>
                   <td><?= $row['alamat']; ?></td>
                   <td><?= $row['usertelp']; ?></td>
-                  <td><?= ($row['level'] == 'admin') ? 'Admin' : 'Karyawan'; ?></td>
                   <td>
-                    <a href="?page=users&aksi=foto&id=<?= $row['userid']; ?>" class="btn btn-primary mb-2"><i class="fa fa-image"></i></a>
+                    <a href="?page=users&aksi=foto&id=<?= $row['usersid']; ?>" class="btn btn-primary mb-2"><i class="fa fa-image"></i></a>
                     <br>
-                    <a href="?page=users&aksi=ubah&id=<?= $row['userid']; ?>" class="btn btn-warning mb-2"><i class="fa fa-tags"></i></a>
+                    <a href="?page=users&aksi=ubah&id=<?= $row['usersid']; ?>" class="btn btn-warning mb-2"><i class="fa fa-tags"></i></a>
                     <br>
-                    <a href="?page=users&aksi=hapus&id=<?= $row['userid']; ?>" class="btn btn-danger" onclick="return confirm('Apakah anda yakin untuk menghapus ?');"><i class="fa fa-trash-o"></i></a>
+                    <a href="?page=users&aksi=hapus&id=<?= $row['usersid']; ?>" class="btn btn-danger" onclick="return confirm('Apakah anda yakin untuk menghapus ?');"><i class="fa fa-trash-o"></i></a>
                   </td>
                 </tr>
               <?php $i++; ?>

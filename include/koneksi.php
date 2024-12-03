@@ -1,9 +1,10 @@
 <?php 
+session_start();
 
 $dbHost = "localhost";
 $dbUsername = "root";
 $dbPass = "";
-$dbName = "db_rental";
+$dbName = "webgis";
 
 $conn = mysqli_connect($dbHost, $dbUsername, $dbPass, $dbName);
 

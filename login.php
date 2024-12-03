@@ -10,23 +10,23 @@ include "include/koneksi.php";
 if (isset($_POST['login'])) {
   $pesan_error = "";
 
-  $username = htmlentities(strip_tags(trim($_POST["username"])));;
+  $adminsname = htmlentities(strip_tags(trim($_POST["username"])));;
   $pass = htmlentities(strip_tags(trim($_POST["password"])));
 
-  $login = mysqli_query($conn, "SELECT * FROM tb_users WHERE username = '$username'");
+  $login = mysqli_query($conn, "SELECT * FROM tb_admins WHERE adminsname = '$adminsname'");
   $cekUser = mysqli_num_rows($login);
   if ($cekUser > 0) {
     $row = mysqli_fetch_assoc($login);
-    if (password_verify($pass, $row['userpass'])) {
-      $_SESSION['username'] = $username;
-      $_SESSION['userid'] = $row['userid'];
+    if (password_verify($pass, $row['adminspass'])) {
+      $_SESSION['adminsname'] = $adminsname;
+      $_SESSION['adminsid'] = $row['adminsid'];
       $_SESSION['level'] = $row['level'];
       $_SESSION['tgllogin'] = date('Y-m-d H:i:s');
       $_SESSION['login'] = true;
       echo "
       <script>
         alert('Login berhasil');
-        window.location.href = 'index.php';
+        window.location.href = 'adminz.php';
       </script>
       ";
     }else{
@@ -48,14 +48,14 @@ if (isset($_POST['login'])) {
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
         <link rel="shortcut icon" href="assets/images/rent1.jpeg" type="image/jpeg"/>
-        <title>Login Rental Ps</title>
+        <title>Login Landique</title>
         <link href="assets/css/bootstrap.min.css" rel="stylesheet" type="text/css">
         <link href="assets/css/icons.css" rel="stylesheet" type="text/css">
         <link href="assets/css/style.css" rel="stylesheet" type="text/css">
     </head>
     <style>
         .accountbg {
-            background-image: url('assets/images/Rental ps.jpeg');
+            background-image: url('assets/images/Foto_login.jpg');
             background-repeat: no-repeat;
             background-size: cover;
         }
@@ -68,11 +68,11 @@ if (isset($_POST['login'])) {
             <div class="card">
                 <div class="card-body">
                     <h3 class="text-center mt-0 m-b-15">
-                        <a href="login.php"><img src="assets/images/rent1.jpeg" width="200px"></a>
+                        <a href="login.php"><img src="assets/images/logo.png" width="250px"></a>
                     </h3>
 
                     <div class="p-3">
-                        <h4 class="text-center mt-0 m-b-15">Rental Ps</h4>
+                        <b class="text-center mt-0 m-b-15">Masukan Data Anda</b>
 
                         <?php if(!$pesan_error == "") : ?>
                             <div class="alert alert-danger" role="alert">
@@ -98,9 +98,13 @@ if (isset($_POST['login'])) {
                                 <div class="col-12">
                                     <button class="btn btn-danger btn-block waves-effect waves-light" type="submit" name="login">Log In</button>
                                 </div>
-                            </div>
-                            
+                            </div>                            
                         </form>
+                        <div class="form-group text-center row m-t-10">
+                            <div class="col-4">
+                                <a href="index.php"><button class="btn btn-warning btn-block waves-effect waves-light">Home</button></a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -4,7 +4,7 @@
 $id = $_GET['id'];
 
 // mengambil data dari tb_user berdasarkan id
-$result = mysqli_query($conn, "SELECT * FROM tb_users WHERE userid = $id");
+$result = mysqli_query($conn, "SELECT * FROM tb_users WHERE usersid = $id");
 $row = mysqli_fetch_assoc($result);
 
   $username = $row['username'];
@@ -21,7 +21,6 @@ if (isset($_POST['ubah'])) {
   $userpass2 = htmlentities(strip_tags(trim($_POST["userpass2"])));
   $alamat = htmlentities(strip_tags(trim($_POST["alamat"])));
   $usertelp = htmlentities(strip_tags(trim($_POST["usertelp"])));
-  $level = htmlentities(strip_tags(trim($_POST["level"])));
   $pesan_error = "";
   $pesan_error_user = "";
   $pesan_error_pass = "";
@@ -55,9 +54,8 @@ if (isset($_POST['ubah'])) {
       `nama` = '$nama',
       `jk` = '$jk',
       `alamat` = '$alamat',
-      `usertelp` = '$usertelp',
-      `level` = '$level'
-      WHERE `tb_users`.`userid` = $id
+      `usertelp` = '$usertelp'
+      WHERE `tb_users`.`usersid` = $id
       ";
       $result = mysqli_query($conn, $query);
     // jika tidak password tidak diupdate
@@ -68,8 +66,7 @@ if (isset($_POST['ubah'])) {
       `jk` = '$jk',
       `alamat` = '$alamat',
       `usertelp` = '$usertelp',
-      `level` = '$level'
-      WHERE `tb_users`.`userid` = $id
+      WHERE `tb_users`.`usersid` = $id
       ";
       $result = mysqli_query($conn, $query);
     }
@@ -110,7 +107,7 @@ if (isset($_POST['ubah'])) {
           <div class="page-title-box">
               <div class="btn-group float-right">
                   <ol class="breadcrumb hide-phone p-0 m-0">
-                      <li class="breadcrumb-item"><a href="index.php">Laundry</a></li>
+                      <li class="breadcrumb-item"><a href="index.php">Landique</a></li>
                       <li class="breadcrumb-item active">Data Users</li>
                       <li class="breadcrumb-item active">Edit User</li>
                   </ol>
@@ -137,7 +134,7 @@ if (isset($_POST['ubah'])) {
               <div class="form-group row">
                 <label for="example-text-input" class="col-sm-2 col-form-label">Username</label>
                 <div class="col-sm-10">
-                  <input type="hidden" name="userid" value="<?= $row['userid']; ?>">
+                  <input type="hidden" name="usersid" value="<?= $row['usersid']; ?>">
 
                   <input class="form-control <?= ($pesan_error_user) ? 'is-invalid' : ''; ?>" type="text"id="example-text-input" name="username" placeholder="Masukkan username" autofocus required value="<?= $username; ?>" />
                   
@@ -213,21 +210,6 @@ if (isset($_POST['ubah'])) {
                 <label for="example-text-input" class="col-sm-2 col-form-label">Telp</label>
                 <div class="col-sm-10">
                   <input class="form-control" type="number"id="example-text-input" name="usertelp" placeholder="Masukkan No.Telp" value="<?= $usertelp; ?>" required/>
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <label for="example-text-input" class="col-sm-2 col-form-label">Jabatan</label>
-                <div class="col-sm-10">
-                  <select name="level" class="form-control">
-                    <?php if($row['level'] == 'admin') { ?>
-                      <option value='admin' selected>Admin</option>
-                      <option value='kasir'>Kasir</option>
-                    <?php }else{ ?>
-                      <option value='admin'>Admin</option>
-                      <option value='kasir' selected>Kasir</option>
-                    <?php } ?>
-                  </select>
                 </div>
               </div>
 

@@ -9,83 +9,87 @@ if ($page == "") {
   include "home.php";
 }
 
-// page pelanggan
-if ($page == "pelanggan") {
-  // halaman pelanggan
+// page USERS
+if ($page == "users") {
+  // halaman USERS
   if ($aksi == "") {
-    include "page/pelanggan/pelanggan.php";
+    include "page/users/users.php";
   }
   // tambah data pelanggan
   if ($aksi == "tambah") {
-    include "page/pelanggan/tambah.php";
+    include "page/users/tambah.php";
   }
   // hapus data pelanggan
   if ($aksi == "hapus") {
-    include "page/pelanggan/hapus.php";
+    include "page/users/hapus.php";
   }
   // ubah data pelanggan
   if ($aksi == "ubah") {
-    include "page/pelanggan/ubah.php";
+    include "page/users/ubah.php";
   }
   // upload foto pelanggan
   if ($aksi == "foto") {
-    include "page/pelanggan/uploadfoto.php";
+    include "page/users/uploadfoto.php";
   }
 }
 
 
 // jika levelnya admin maka dapat megakses halaman ini
 // halaman ini hanya bisa diakses admin
-if ($_SESSION['level'] == 'admin') {
-  // page users
-  if ($page == "users") {
-    // halaman users
+if ($_SESSION['level'] == 'Admin') {
+  // page admins
+  if ($page == "admin") {
+    // halaman admins
     if ($aksi == "") {
-      include "page/users/users.php";
+      include "page/admin/admin.php";
     }
-    // tambah users
+    // tambah admins
     if ($aksi == "tambah") {
-      include "page/users/tambah.php";
+      include "page/admin/tambah.php";
     }
-    // hapus users
+    // hapus admins
     if ($aksi == "hapus") {
-      include "page/users/hapus.php";
+      include "page/admin/hapus.php";
     }
-    // ubah users
+    // ubah admins
     if ($aksi == "ubah") {
-      include "page/users/ubah.php";
+      include "page/admin/ubah.php";
     }
-    // upload foto users
+    // upload foto admins
     if ($aksi == "foto") {
-      include "page/users/uploadfoto.php";
+      include "page/admin/uploadfoto.php";
     }
   }
 
-  // page jenis
-  if ($page == "jenis") {
-    // menampilkan halaman jenis
+  // page PRODUK
+  if ($page == "produk") {
+    // menampilkan halaman PRODUK
     if ($aksi == "") {
-      include "page/jenis/jenis.php";
+      include "page/produk/produk.php";
     }
     // tambah 
     if ($aksi == "tambah") {
-      include "page/jenis/tambah.php";
+      include "page/produk/tambah.php";
     }
     if ($aksi == "hapus") {
-      include "page/jenis/hapus.php";
+      include "page/produk/hapus.php";
     }
     if ($aksi == "ubah") {
-      include "page/jenis/ubah.php";
+      include "page/produk/ubah.php";
+    }
+    // upload foto produk
+    if ($aksi == "foto") {
+      include "page/produk/uploadfoto.php";
     }
   }
 } // sampai sini
 
 
-// page transaksi rental
-if ($page == "rental") {
-  // menampilkan halaman rental
+// page transaksi
+if ($page == "transaksi") {
+  // menampilkan halaman transaksi
   if ($aksi == "") {
-    include "page/rental/rental.php";
+    include "page/transaksi/transaksi.php";
   }
   // menampilkan data yg sudah lunas
   if ($aksi == "rentallunas") {
@@ -117,10 +121,10 @@ if ($page == "rental") {
   }
 }
 
-// page pengeluaran
-if ($page == "pengeluaran") {
+// page DETAIL TRANSAKSI
+if ($page == "detail_transaksi") {
   if ($aksi == "") {
-    include "page/pengeluaran/pengeluaran.php";
+    include "page/detail_transaksi/detail_transaksi.php";
   }
   if ($aksi == "tambah") {
     include "page/pengeluaran/tambah.php";
@@ -136,15 +140,15 @@ if ($page == "pengeluaran") {
   }
 }
 
-// page laporan
-if ($page == "laporan") {
-  if ($aksi == "") {
-    include "page/laporan/laporan.php";
-  }
-  // if ($aksi == "detail") {
-  //   include "page/detail_transaksi.php";
-  // }
-}
+// page Proses
+// if ($page == "proses") {
+//   if ($aksi == "") {
+//     include "page/laporan/laporan.php";
+//   }
+//   if ($aksi == "detail") {
+//     include "page/detail_transaksi.php";
+//   }
+// }
 
 // halaman profile
 if ($page == "profile") {

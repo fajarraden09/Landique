@@ -2,66 +2,66 @@
 
 $id = $_GET['id'];
 // mengambil data dari database
-$result = mysqli_query($conn, "SELECT * FROM tb_users WHERE userid = $id");
+$result = mysqli_query($conn, "SELECT * FROM tb_admins WHERE adminsid = $id");
 $row = mysqli_fetch_assoc($result);
 
-  $username = $row['username'];
+  $adminsname = $row['adminsname'];
   $nama = $row['nama'];
   $alamat = $row['alamat'];
-  $usertelp = $row['usertelp'];
+  $admintelp = $row['admintelp'];
 
 // jika tombol ubah ditekan
 if (isset($_POST['ubah'])) {
-  $username = htmlentities(strip_tags(trim($_POST["username"])));
+  $adminsname = htmlentities(strip_tags(trim($_POST["adminsname"])));
   $nama = htmlentities(strip_tags(trim($_POST["nama"])));
   $jk = htmlentities(strip_tags(trim($_POST["jk"])));
-  $userpass = htmlentities(strip_tags(trim($_POST["userpass"])));
-  $userpass2 = htmlentities(strip_tags(trim($_POST["userpass2"])));
+  $adminspass = htmlentities(strip_tags(trim($_POST["adminspass"])));
+  $adminspass2 = htmlentities(strip_tags(trim($_POST["adminspass2"])));
   $alamat = htmlentities(strip_tags(trim($_POST["alamat"])));
-  $usertelp = htmlentities(strip_tags(trim($_POST["usertelp"])));
+  $admintelp = htmlentities(strip_tags(trim($_POST["admintelp"])));
   $pesan_error = "";
   $pesan_error_user = "";
   $pesan_error_pass = "";
 
-  // jika username namanya sama
-  if ($row['username'] !== $username) {
-    $query_username = mysqli_query($conn, "SELECT * FROM tb_users WHERE username = '$username'");
-    $result_username = mysqli_num_rows($query_username);
-    // cek apakah username ada
-    if ($result_username > 0) {
-      $pesan_error_user = "Username <b>$username</b> sudah digunakan <br>";
+  // jika adminsname namanya sama
+  if ($row['adminsname'] !== $adminsname) {
+    $query_adminsname = mysqli_query($conn, "SELECT * FROM tb_admins WHERE adminsname = '$adminsname'");
+    $result_adminsname = mysqli_num_rows($query_adminsname);
+    // cek apakah adminsname ada
+    if ($result_adminsname > 0) {
+      $pesan_error_user = "adminsname <b>$adminsname</b> sudah digunakan <br>";
     }
   }
 
   // jika password diisi
-  if ($userpass !== "") {
-    if ($userpass !== $userpass2) {
+  if ($adminspass !== "") {
+    if ($adminspass !== $adminspass2) {
       $pesan_error_pass = "Retype password tidak sesuai <br>";
     }
   }
 
   // jika tidak ada pesan error
   if ($pesan_error_user == "" && $pesan_error_pass == "") {
-    if ($userpass !== "") {
-      $password = password_hash($userpass, PASSWORD_DEFAULT);
-      $query = "UPDATE `tb_users` SET
-      `username` = '$username',
-      `userpass` = '$password',
+    if ($adminspass !== "") {
+      $password = password_hash($adminspass, PASSWORD_DEFAULT);
+      $query = "UPDATE `tb_admins` SET
+      `adminsname` = '$adminsname',
+      `adminspass` = '$password',
       `nama` = '$nama',
       `jk` = '$jk',
       `alamat` = '$alamat',
-      `usertelp` = '$usertelp'
-      WHERE `tb_users`.`userid` = $id
+      `admintelp` = '$admintelp'
+      WHERE `tb_admins`.`adminsid` = $id
       ";
       $result = mysqli_query($conn, $query);
     }else{
-      $query = "UPDATE `tb_users` SET
-      `username` = '$username',
+      $query = "UPDATE `tb_admins` SET
+      `adminsname` = '$adminsname',
       `nama` = '$nama',
       `jk` = '$jk',
       `alamat` = '$alamat',
-      `usertelp` = '$usertelp'
-      WHERE `tb_users`.`userid` = $id
+      `admintelp` = '$admintelp'
+      WHERE `tb_admins`.`adminsid` = $id
       ";
       $result = mysqli_query($conn, $query);
     }
@@ -71,7 +71,7 @@ if (isset($_POST['ubah'])) {
       echo "
       <script>
         alert('Profile berhasil diubah');
-        window.location.href = 'index.php';
+        window.location.href = 'adminz.php';
       </script>
       ";
     }else{
@@ -84,8 +84,8 @@ if (isset($_POST['ubah'])) {
 
 }else{
   // value pass
-  $userpass = "";
-  $userpass2 = "";
+  $adminspass = "";
+  $adminspass2 = "";
   // pesan error
   $pesan_error = "";
   $pesan_error_user = "";
@@ -102,7 +102,7 @@ if (isset($_POST['ubah'])) {
           <div class="page-title-box">
               <div class="btn-group float-right">
                   <ol class="breadcrumb hide-phone p-0 m-0">
-                      <li class="breadcrumb-item"><a href="index.php">rental</a></li>
+                      <li class="breadcrumb-item"><a href="index.php">Landique</a></li>
                       <li class="breadcrumb-item active">Profile</li>
                   </ol>
               </div>
@@ -125,19 +125,19 @@ if (isset($_POST['ubah'])) {
             <div class="card-body">
 
             <!-- upload image -->
-            <p align="center">
-              <a href="fotouser/<?= $row['userfoto']; ?>" target="_blank"><img src="fotouser/<?= $row['userfoto']; ?>" style="display: block; margin:auto; height:200px;" class="img-thumbnail img-preview mb-1"></a>
+            <p align="center" >
+              <a href="fotoadmins/<?= $row['adminsfoto']; ?>" target="_blank"><img src="fotoadmins/<?= $row['adminsfoto']; ?>" style="display: block; margin:auto; height:200px;" class="img-thumbnail img-preview mb-1"></a>
 
-              <a href="?page=profile&aksi=ubahfoto&id=<?= $row['userid']; ?>" class="btn btn-primary">Ubah Foto</a>
+              <a href="?page=admin&aksi=foto&id=<?= $row['adminsid']; ?>" class="btn btn-primary" style="margin-top:10px">Ubah Foto</a>
             </p>
 
               <div class="form-group row">
 
                 <label for="example-text-input" class="col-sm-2 col-form-label">Username</label>
                 <div class="col-sm-10">
-                  <input type="hidden" name="userid" value="<?= $row['userid']; ?>">
+                  <input type="hidden" name="adminsid" value="<?= $row['adminsid']; ?>">
 
-                  <input class="form-control <?= ($pesan_error_user) ? 'is-invalid' : ''; ?>" type="text"id="example-text-input" name="username" placeholder="Masukkan username" autofocus required value="<?= $username; ?>" />
+                  <input class="form-control <?= ($pesan_error_user) ? 'is-invalid' : ''; ?>" type="text"id="example-text-input" name="adminsname" placeholder="Masukkan adminsname" autofocus required value="<?= $adminsname; ?>" />
                   
                   <div class="invalid-feedback">
                     <?= $pesan_error_user; ?>
@@ -149,10 +149,10 @@ if (isset($_POST['ubah'])) {
                 <label for="example-text-input" class="col-sm-2 col-form-label">Password</label>
                 <div class="col-sm-10">
                     <div>
-                      <input class="form-control" type="password"id="example-text-input" name="userpass" placeholder="Masukkan password" value="<?= $userpass; ?>" />  
+                      <input class="form-control" type="password"id="example-text-input" name="adminspass" placeholder="Masukkan password" value="<?= $adminspass; ?>" />  
                     </div>
                     <div class="m-t-10">
-                      <input class="form-control <?= ($pesan_error_pass) ? 'is-invalid' : ''; ?>" type="password"id="example-text-input" name="userpass2" placeholder="Retype password" value="<?= $userpass2; ?>"/>
+                      <input class="form-control <?= ($pesan_error_pass) ? 'is-invalid' : ''; ?>" type="password"id="example-text-input" name="adminspass2" placeholder="Retype password" value="<?= $adminspass2; ?>"/>
                       <div class="invalid-feedback">
                         <?= $pesan_error_pass; ?>
                       </div>
@@ -210,7 +210,7 @@ if (isset($_POST['ubah'])) {
               <div class="form-group row">
                 <label for="example-text-input" class="col-sm-2 col-form-label">Telp</label>
                 <div class="col-sm-10">
-                  <input class="form-control" type="number"id="example-text-input" name="usertelp" placeholder="Masukkan No.Telp" value="<?= $usertelp; ?>" required/>
+                  <input class="form-control" type="number"id="example-text-input" name="admintelp" placeholder="Masukkan No.Telp" value="<?= $admintelp; ?>" required/>
                 </div>
               </div>
 
